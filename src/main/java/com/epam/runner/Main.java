@@ -1,12 +1,15 @@
-package com.epam.www.runner;
+package com.epam.runner;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-import com.epam.www.Server;
-import com.epam.www.constants.CommonConstants;
-import com.epam.www.utils.HttpMethodUtils;
+import com.epam.Server;
+import com.epam.constants.CommonConstants;
+import com.epam.utils.HttpMethodUtils;
+
 
 public class Main {
 
@@ -23,21 +26,13 @@ public class Main {
 
 		Server webServer = new Server(8080, 20) {
 			public void service(BufferedReader rq, PrintWriter rp) throws IOException {
-				if (rq.readLine().contains(CommonConstants.POST)) {
+		
+					List <String>  aa = HttpMethodUtils.getHeaderValue(rq);
+					
+		
 
-					System.out.println("It is post request");
-
-					int contentLengh = HttpMethodUtils.getContentLength(rq);
-					String bodyRequest = HttpMethodUtils.getPostBody(rq);
-
-					System.out.println("Content lenght: " + contentLengh);
-					System.out.println("Body request: " + bodyRequest);
-				} else {
-					System.out.println("It is get request");
-				}
-
-				rp.println(result);
 			}
+
 		};
 		webServer.start();
 	}

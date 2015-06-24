@@ -4,4 +4,13 @@
   <artifactId>web-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>web</name>
+  
+      <dependencies>
+  		<dependency>
+    		<groupId>com.sparkjava</groupId>
+    		<artifactId>spark-core</artifactId>
+    		<version>2.2</version>
+		</dependency>
+	   </dependencies>
+	
 </project>

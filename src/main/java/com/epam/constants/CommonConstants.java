@@ -1,4 +1,4 @@
-package com.epam.www.constants;
+package com.epam.constants;
 
 public class CommonConstants {
 

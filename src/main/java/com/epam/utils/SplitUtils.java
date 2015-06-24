@@ -1,4 +1,4 @@
-package com.epam.www.utils;
+package com.epam.utils;
 
 public class SplitUtils {
 
