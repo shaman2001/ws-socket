@@ -12,4 +12,14 @@ public class SplitUtils {
 		return lastValue;
 	}
 
+	public static String getCertainSplitValueBy(String sourceString, int splitIndex, String patternForSplit) {
+		String lastValue = "";
+		String[] content = sourceString.split(patternForSplit);
+
+		if (content.length > 1) {
+			lastValue = content[splitIndex].trim();
+		}
+		return lastValue;
+	}
+
 }
