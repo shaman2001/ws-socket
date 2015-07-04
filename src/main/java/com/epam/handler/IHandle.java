@@ -1,11 +1,12 @@
 package com.epam.handler;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import com.epam.method.Request;
+import com.epam.method.Response;
 
 public interface IHandle {
 
-	public void handle(BufferedReader rq, PrintWriter rp) throws IOException;
+	public void handle(Request rq, Response rp) throws IOException;
 
 }

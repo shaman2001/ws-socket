@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.epam.Server;
 import com.epam.constants.CommonConstants;
+import com.epam.handler.imphandler.AddBook;
 import com.epam.handler.imphandler.GetAllBooks;
 import com.epam.handler.imphandler.GetCertainBook;
 
@@ -17,8 +18,10 @@ public class Main {
 
 		Server webServer = new Server(8080, 20);
 
-		webServer.addHendler(CommonConstants.GET, "/book/[.][*]", new GetAllBooks());
+		webServer.addHendler(CommonConstants.GET, "/book", new GetAllBooks());
 		webServer.addHendler(CommonConstants.GET, "/book/[0-9]", new GetCertainBook());
+
+		webServer.addHendler(CommonConstants.POST, "/book", new AddBook());
 
 		webServer.start();
 	}

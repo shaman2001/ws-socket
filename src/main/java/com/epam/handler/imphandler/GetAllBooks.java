@@ -1,24 +1,62 @@
 package com.epam.handler.imphandler;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import com.epam.Store;
+import com.epam.constants.CommonConstants;
+import com.epam.constants.ResponseConstants;
 import com.epam.handler.IHandle;
-import com.epam.model.json.Book;
+import com.epam.method.Request;
+import com.epam.method.Response;
+import com.epam.model.Book;
+import com.epam.model.BooksModel;
+import com.epam.utils.jackson.JsonUtils;
+import com.epam.utils.marshaller.MarshallerHelper;
 
 public class GetAllBooks implements IHandle {
 
-	public void handle(BufferedReader rq, PrintWriter rp) throws IOException {
+	public void handle(Request rq, Response rp) throws IOException {
+		String acceptType = rq.getAccept();
 
-		String bodyResponse = "";
-		List<Book> books = Store.getAllBook();
-		for (Book certainBook : books) {
-			bodyResponse += "<tr><td>" + certainBook.getIdBook() + "</td><td>" + certainBook.getNameBook() + "</td></tr>";
+		try {
+			response(rq, rp, acceptType);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		rp.println("<html><body> <table border=\"1\"><th>id</th><th>name</th>" + bodyResponse + "</table></body></html>");
 	}
 
+	private void response(Request rq, Response rp, String acceptType) throws JAXBException {
+		String body = "";
+		List<Book> books = Store.getAllBook();
+
+		rp.setVersion(rq.getVersion());
+		rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
+		rp.setContentType(rq.getAccept());
+
+		BooksModel book = new BooksModel();
+		book.setBooks(books);
+
+		if (acceptType.equals(CommonConstants.ACCEPT_TYPE_JSON)) {
+			body = JsonUtils.toJson(book);
+			rp.setContentLength(String.valueOf(body.getBytes().length));
+			rp.setBody(body);
+		} else if (acceptType.equals(CommonConstants.ACCEPT_TYPE_XML)) {
+			StringWriter writer = new StringWriter();
+			MarshallerHelper.marshall(book, writer);
+			body = writer.toString();
+			rp.setContentLength(String.valueOf(body.getBytes().length));
+			rp.setBody(body);
+		}
+
+		try {
+			rp.write();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
