@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.epam.Store;
 import com.epam.handler.IHandle;
-import com.epam.model.Book;
+import com.epam.model.json.Book;
 
 public class GetAllBooks implements IHandle {
 
