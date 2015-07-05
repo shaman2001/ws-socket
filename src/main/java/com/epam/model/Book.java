@@ -8,24 +8,23 @@ import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Book", propOrder = { "id", "language", "edition", "author", "date" })
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlType(name = "Book", propOrder = { "id", "language", "edition", "author", "create_date" })
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
 
-	@XmlElement(required = true)
 	@JsonProperty("id")
 	private int id;
 
-	@XmlElement(required = true)
+	@XmlElement(required = true, name = "language")
 	@JsonProperty("language")
 	private String language;
 
-	@XmlElement(required = true)
+	@XmlElement(required = true, name = "edition")
 	@JsonProperty("edition")
 	private String edition;
 
-	@XmlElement(required = true)
+	@XmlElement(required = true, name = "author")
 	@JsonProperty("author")
 	private String author;
 
@@ -36,8 +35,8 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(int idBook, String language, String edition, String author, String date) {
-		this.id = idBook;
+	public Book(int id, String language, String edition, String author, String date) {
+		this.id = id;
 		this.language = language;
 		this.edition = edition;
 		this.author = author;

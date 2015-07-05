@@ -13,7 +13,7 @@ import com.epam.handler.IHandle;
 import com.epam.method.Request;
 import com.epam.method.Response;
 import com.epam.model.Book;
-import com.epam.model.BooksModel;
+import com.epam.model.BooksPojo;
 import com.epam.utils.jackson.JsonUtils;
 import com.epam.utils.marshaller.MarshallerHelper;
 
@@ -38,7 +38,7 @@ public class GetAllBooks implements IHandle {
 		rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
 		rp.setContentType(rq.getAccept());
 
-		BooksModel book = new BooksModel();
+		BooksPojo book = new BooksPojo();
 		book.setBooks(books);
 
 		if (acceptType.equals(CommonConstants.ACCEPT_TYPE_JSON)) {
@@ -48,7 +48,9 @@ public class GetAllBooks implements IHandle {
 		} else if (acceptType.equals(CommonConstants.ACCEPT_TYPE_XML)) {
 			StringWriter writer = new StringWriter();
 			MarshallerHelper.marshall(book, writer);
+
 			body = writer.toString();
+
 			rp.setContentLength(String.valueOf(body.getBytes().length));
 			rp.setBody(body);
 		}

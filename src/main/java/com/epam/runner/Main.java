@@ -19,10 +19,8 @@ public class Main {
 		Server webServer = new Server(8080, 20);
 
 		webServer.addHendler(CommonConstants.GET, "/book", new GetAllBooks());
-		webServer.addHendler(CommonConstants.GET, "/book/[0-9]", new GetCertainBook());
-
 		webServer.addHendler(CommonConstants.POST, "/book", new AddBook());
-
+		webServer.addHendler(CommonConstants.GET, "/book/{id}", new GetCertainBook());
 		webServer.start();
 	}
 }

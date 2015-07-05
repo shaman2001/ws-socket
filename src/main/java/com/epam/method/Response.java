@@ -26,12 +26,24 @@ public class Response {
 	public void write() throws IOException {
 		String respose = "";
 		Map<String, String> responseMap = new LinkedHashMap<String, String>();
+
 		responseMap.put(version, statusCode);
+
 		responseMap.put(ResponseConstants.SERVER, ResponseConstants.SERVER_VALUE);
-		responseMap.put(CommonConstants.CONTENT_TYPE, contentType + "\r\n");
-		responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
+
+		if (!contentType.isEmpty()) {
+			responseMap.put(CommonConstants.CONTENT_TYPE, contentType + "\r\n");
+		}
+
+		if (!contentLength.isEmpty()) {
+			responseMap.put(CommonConstants.CONTENT_LENGTH, contentLength + "\r\n");
+		}
+
 		responseMap.put(CommonConstants.CONNECTION, ResponseConstants.CONNECTION_VALUE);
-		responseMap.put(ResponseConstants.BODY, body);
+
+		if (!body.isEmpty()) {
+			responseMap.put(ResponseConstants.BODY, body);
+		}
 
 		for (Map.Entry<String, String> pair : responseMap.entrySet()) {
 			String key = pair.getKey();
