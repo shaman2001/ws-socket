@@ -12,20 +12,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.NONE)
+@XmlAccessorType(XmlAccessType.FIELD)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BooksPojo {
 
-	@XmlElement(name = "book")
+	@XmlElement
 	@XmlElementWrapper(name = "books")
 	@JsonProperty("books")
-	private List<Book> books;
+	private List<Book> book;
 
-	public List<Book> getBooks() {
-		return books;
+	public List<Book> getBook() {
+		return book;
 	}
 
-	public void setBooks(List<Book> books) {
-		this.books = books;
+	public void setBooks(List<Book> book) {
+		this.book = book;
 	}
 }

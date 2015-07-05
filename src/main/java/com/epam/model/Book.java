@@ -8,11 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@XmlAccessorType(XmlAccessType.NONE)
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Book", propOrder = { "id", "language", "edition", "author", "create_date" })
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
 
+	@XmlElement(required = true, name = "id")
 	@JsonProperty("id")
 	private int id;
 

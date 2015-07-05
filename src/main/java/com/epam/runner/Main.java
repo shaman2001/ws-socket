@@ -17,7 +17,6 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		Server webServer = new Server(8080, 20);
-
 		webServer.addHendler(CommonConstants.GET, "/book", new GetAllBooks());
 		webServer.addHendler(CommonConstants.POST, "/book", new AddBook());
 		webServer.addHendler(CommonConstants.GET, "/book/{id}", new GetCertainBook());

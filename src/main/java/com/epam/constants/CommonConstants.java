@@ -2,6 +2,10 @@ package com.epam.constants;
 
 public class CommonConstants {
 
+	public static final String RES_OUTPUT_FOLDER = "result";
+
+	public static final String SUITE = "testng.xml";
+
 	public static final String GET = "GET";
 
 	public static final String POST = "POST";
