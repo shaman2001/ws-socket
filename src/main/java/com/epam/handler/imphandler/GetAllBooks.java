@@ -19,46 +19,45 @@ import com.epam.utils.marshaller.MarshallerHelper;
 
 public class GetAllBooks implements IHandle {
 
-	public void handle(Request rq, Response rp) throws IOException {
-		String acceptType = rq.getAccept();
+    public void handle(Request rq, Response rp) throws IOException {
+	String acceptType = rq.getAccept();
 
-		try {
-			response(rq, rp, acceptType);
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	try {
+	    response(rq, rp, acceptType);
+	} catch (JAXBException e) {
+	    e.printStackTrace();
+	}
+    }
+
+    private void response(Request rq, Response rp, String acceptType) throws JAXBException {
+	String body = "";
+	List<Book> books = Store.getAllBook();
+
+	rp.setVersion(rq.getVersion());
+	rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
+	rp.setContentType(rq.getAccept());
+
+	BooksPojo book = new BooksPojo(books);
+
+	if (acceptType.equals(CommonConstants.ACCEPT_TYPE_XML)) {
+
+	    StringWriter writer = new StringWriter();
+	    MarshallerHelper.marshall(book, writer);
+
+	    body = writer.toString();
+
+	    rp.setContentLength(String.valueOf(body.getBytes().length));
+	    rp.setBody(body);
+	} else {
+	    body = JsonUtils.toJson(book);
+	    rp.setContentLength(String.valueOf(body.getBytes().length));
+	    rp.setBody(body);
 	}
 
-	private void response(Request rq, Response rp, String acceptType) throws JAXBException {
-		String body = "";
-		List<Book> books = Store.getAllBook();
-
-		rp.setVersion(rq.getVersion());
-		rp.setStatusCode(ResponseConstants.STATUS_CODE_200_OK);
-		rp.setContentType(rq.getAccept());
-
-		BooksPojo book = new BooksPojo();
-		book.setBooks(books);
-
-		if (acceptType.equals(CommonConstants.ACCEPT_TYPE_JSON)) {
-			body = JsonUtils.toJson(book);
-			rp.setContentLength(String.valueOf(body.getBytes().length));
-			rp.setBody(body);
-		} else if (acceptType.equals(CommonConstants.ACCEPT_TYPE_XML)) {
-			StringWriter writer = new StringWriter();
-			MarshallerHelper.marshall(book, writer);
-
-			body = writer.toString();
-
-			rp.setContentLength(String.valueOf(body.getBytes().length));
-			rp.setBody(body);
-		}
-
-		try {
-			rp.write();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	try {
+	    rp.write();
+	} catch (IOException e) {
+	    e.printStackTrace();
 	}
+    }
 }

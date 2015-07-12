@@ -11,21 +11,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@XmlRootElement
+@XmlRootElement(name = "store")
 @XmlAccessorType(XmlAccessType.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BooksPojo {
 
-	@XmlElement(name = "book")
-	@XmlElementWrapper(name = "books")
-	@JsonProperty("books")
-	private List<Book> book;
+    @XmlElementWrapper(name = "books")
+    @XmlElement(name = "book")
+    @JsonProperty("books")
+    private List<Book> book;
 
-	public List<Book> getBook() {
-		return book;
-	}
+    public BooksPojo() {
+    }
 
-	public void setBooks(List<Book> book) {
-		this.book = book;
-	}
+    public BooksPojo(List<Book> book) {
+	this.book = book;
+    }
+
+    public List<Book> getBook() {
+	return book;
+    }
+
+    public void setBooks(List<Book> book) {
+	this.book = book;
+    }
 }
